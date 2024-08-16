@@ -1,5 +1,5 @@
 import { client } from './client'
-import { Role } from './definitions'
+import { Post, Role } from './definitions'
 
 export async function getExperience(): Promise<Role[]> {
   const exp =
@@ -18,4 +18,26 @@ export async function getExperience(): Promise<Role[]> {
       "end" : endDate
   }`)
   return exp
+}
+
+export async function getPosts(): Promise<Post[]> {
+  const posts = await client.fetch(`*[_type == "post"]{
+      "date": _createdAt,
+      "slug": slug.current,
+      title,
+      description
+    
+    }`)
+  return posts
+}
+
+export async function getPostBySlug(slug: string): Promise<Post> {
+  const [post] =
+    await client.fetch(`*[_type == "post" && slug.current == '${slug}']{
+      "date": _createdAt,
+      "slug": slug.current,
+      title,
+      description    
+    }`)
+  return post
 }

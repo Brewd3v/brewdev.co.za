@@ -8,3 +8,10 @@ export interface Role {
   start: string
   end: string
 }
+
+export interface Post {
+  date: string,
+  slug: string,
+  title: string,
+  description: string | null
+}
