@@ -1,5 +1,5 @@
 import { client } from './client'
-import { Post, Role } from './definitions'
+import { Post, Project, Role } from './definitions'
 
 export async function getExperience(): Promise<Role[]> {
   const exp =
@@ -40,4 +40,9 @@ export async function getPostBySlug(slug: string): Promise<Post> {
       description    
     }`)
   return post
+}
+
+export async function getProjects(): Promise<Project> {
+  const projects = await client.fetch(`*[_type == "projects"]`)
+  return projects
 }
