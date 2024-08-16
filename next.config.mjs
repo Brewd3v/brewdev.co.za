@@ -10,6 +10,9 @@ const nextConfig = {
       '/articles/*': ['./src/app/articles/**/*.mdx'],
     },
   },
+  images: {
+    domains: ['avatars.githubusercontent.com', 'cdn.sanity.io'],
+  },
 }
 
 const withMDX = nextMDX({

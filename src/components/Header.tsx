@@ -14,7 +14,7 @@ import {
 import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
-import avatarImage from '@/images/avatar.jpg'
+import { getGithubProfile } from '@/lib/queries'
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -121,11 +121,11 @@ function MobileNavigation(
         </div>
         <nav className="mt-6">
           <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-            <MobileNavItem href="/about">About</MobileNavItem>
+            {/* <MobileNavItem href="/about">About</MobileNavItem> */}
             <MobileNavItem href="/articles">Articles</MobileNavItem>
             <MobileNavItem href="/projects">Projects</MobileNavItem>
-            <MobileNavItem href="/speaking">Speaking</MobileNavItem>
-            <MobileNavItem href="/uses">Uses</MobileNavItem>
+            {/* <MobileNavItem href="/speaking">Speaking</MobileNavItem>
+            <MobileNavItem href="/uses">Uses</MobileNavItem> */}
           </ul>
         </nav>
       </PopoverPanel>
@@ -166,11 +166,11 @@ function DesktopNavigation(props: React.ComponentPropsWithoutRef<'nav'>) {
   return (
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/about">About</NavItem>
+        {/* <NavItem href="/about">About</NavItem> */}
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/speaking">Speaking</NavItem>
-        <NavItem href="/uses">Uses</NavItem>
+        {/* <NavItem href="/speaking">Speaking</NavItem>
+        <NavItem href="/uses">Uses</NavItem> */}
       </ul>
     </nav>
   )
@@ -226,25 +226,42 @@ function Avatar({
 }: Omit<React.ComponentPropsWithoutRef<typeof Link>, 'href'> & {
   large?: boolean
 }) {
+
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      const profile = await getGithubProfile();
+      setAvatarUrl(profile.avatar_url);
+    };
+
+    fetchAvatar();
+  }, []);
+
+  const size = large ? 64 : 36;
+
   return (
     <Link
       href="/"
       aria-label="Home"
-      className={clsx(className, 'pointer-events-auto')}
+      className={clsx(className, 'pointer-events-auto relative')}
       {...props}
     >
-      <Image
-        src={avatarImage}
-        alt=""
-        sizes={large ? '4rem' : '2.25rem'}
-        className={clsx(
-          'rounded-full bg-zinc-100 object-cover dark:bg-zinc-800',
-          large ? 'h-16 w-16' : 'h-9 w-9',
-        )}
-        priority
-      />
+      {avatarUrl && (
+        <Image
+          src={avatarUrl}
+          alt="Brewd3v avatar dynamically loaded from GitHub API"
+          width={size}  // Set the width
+          height={size} // Set the height
+          className={clsx(
+            'rounded-full bg-zinc-100 object-cover dark:bg-zinc-800',
+            large ? 'h-16 w-16' : 'h-9 w-9',
+          )}
+          priority
+        />
+      )}
     </Link>
-  )
+  );
 }
 
 export function Header() {
