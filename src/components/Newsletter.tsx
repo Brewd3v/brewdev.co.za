@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/components/Button'
+import { addToNewsletter } from '@/lib/actions'
 
 function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
     return (
@@ -25,20 +26,9 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 }
 
 export function Newsletter() {
-    const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        await fetch('/__forms.html', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData as any).toString() // TypeScript needs this cast because FormData is not directly compatible with URLSearchParams
-        });
-        // Success & error handling should come here
-    };
-
     return (
         <form
-            onSubmit={handleFormSubmit}
+            action={addToNewsletter}
             name="newsletter"
             className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
         >
