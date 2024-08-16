@@ -109,7 +109,7 @@ function Newsletter() {
   return (
     <form
       data-netlify="true"
-      name="newsletter" 
+      name="newsletter"
       method="POST"
       className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
     >
@@ -241,7 +241,7 @@ export default async function Home() {
             Full-stack web developer, problem-solver, and creative thinker
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            Hey! I'm James, a web developer who loves building digital solutions that make a difference. I've worked on marketing-focused projects, have experience with multiple frameworks and CMS systems, and am always looking for new challenges and ways to improve my skills (currently going down a backend rabbit-hole with Go and loving it).
+            Hey! I&apos;m James, a web developer who loves building digital solutions that make a difference. I&apos;ve worked on marketing-focused projects, have experience with multiple frameworks and CMS systems, and am always looking for new challenges and ways to improve my skills (currently going down a backend rabbit-hole with Go and loving it).
           </p>
           <div className="mt-6 flex gap-6">
             {/* <SocialLink href="#" aria-label="Follow on X" icon={XIcon} /> */}
